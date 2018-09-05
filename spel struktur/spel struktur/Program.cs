@@ -8,6 +8,10 @@ namespace spel_struktur
 {
     class Program
     {
+        /// <summary>
+        /// ett spel (syns inte i monogame)
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             Initialize();
