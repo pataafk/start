@@ -8,6 +8,13 @@ namespace spel_struktur
 {
     class Program
     {
+        //globala deklarrationer
+
+        static int Spelarex;
+        static int Spelarey;
+
+
+
         /// <summary>
         /// ett spel (syns inte i monogame)
         /// </summary>
@@ -27,7 +34,8 @@ namespace spel_struktur
         /// </summary>
         static void Initialize()
         {
-
+            Spelarex = 1;
+            Spelarey = 1;
         }
 
         /// <summary>
@@ -35,7 +43,18 @@ namespace spel_struktur
         /// </summary>
         static void Uppdate()
         {
+            // läs in tangenttryckningar
+            var key = Console.ReadKey();
 
+            // styrning
+
+            switch(key.Key)
+            {
+                case ConsoleKey.LeftArrow:
+                    Spelarex -= 1;
+
+                    break;
+            }
         }
 
         /// <summary>
@@ -43,6 +62,23 @@ namespace spel_struktur
         /// </summary>
         static void Draw()
         {
+            //ränsa skärm
+            Console.Clear();
+
+            //rita bana med 10 tecken bredd och 8 tecken höjd
+
+            for (int y = 0; y < 8; y++)
+            {
+                for (int x = 0; x < 9;x++)
+                {
+                    Console.Write("#");
+                    if (x==Spelarex && y == Spelarey)
+                    {
+                        Console.Write("@");
+                    }
+                }
+                Console.WriteLine("");
+            }
 
         }
     }
