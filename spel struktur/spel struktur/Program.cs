@@ -51,12 +51,36 @@ namespace spel_struktur
             switch(key.Key)
             {
                 case ConsoleKey.LeftArrow:
-                    Spelarex -= 1;
+                    if (Spelarex > 0)
+                        Spelarex -= 1;
+                    break;
+            }
+            switch (key.Key)
+            {
+                case ConsoleKey.RightArrow:
+                    if (Spelarex < 13)
+                        Spelarex += 1;
+
+                    break;
+            }
+            switch(key.Key)
+            {
+                case ConsoleKey.DownArrow:
+                    if (Spelarey < 10)
+                        Spelarey += 1;
+
+                    break;
+            }
+            switch(key.Key)
+            {
+                case ConsoleKey.UpArrow:
+                    if (Spelarey > 0)
+                        Spelarey -= 1;
 
                     break;
             }
         }
-
+        
         /// <summary>
         /// ritar ut på bildskärmen
         /// </summary>
@@ -67,19 +91,27 @@ namespace spel_struktur
 
             //rita bana med 10 tecken bredd och 8 tecken höjd
 
-            for (int y = 0; y < 8; y++)
+            for (int y = 0; y < 11; y++)
             {
-                for (int x = 0; x < 9;x++)
+                for (int x = 0; x < 14;x++)
                 {
-                    Console.Write("#");
-                    if (x==Spelarex && y == Spelarey)
+                    if (x == Spelarex && y == Spelarey)
                     {
                         Console.Write("@");
+                        
+                    }
+                    else
+                    {
+                        Console.Write("#");
                     }
                 }
                 Console.WriteLine("");
             }
-
+            switch()
+            {
+                case 
+            }
+             Console.WriteLine("")
         }
     }
 }
