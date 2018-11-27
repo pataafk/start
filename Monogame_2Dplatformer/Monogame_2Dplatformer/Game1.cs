@@ -124,15 +124,12 @@ namespace Monogame_2Dplatformer
                 world.CameraPosition += new Vector2(1.0f, 0);
 
 
-            if (player.CollisionCheck(Convert.To(world.Data)))
-                this.Exit();
-            player.Update(Window);
-            
+
+            if (player.CollisionCheck(world.Data(0)))
+            {
 
 
-                
-
-        
+            }
 
 
 
