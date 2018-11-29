@@ -9,13 +9,35 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Monogame_2Dplatformer
 {
+    enum Tiletype
+    {
+        ground, wall, exit
+    }
+    class Tile : GameObject
+    {
+        protected int TileWidth { get; set; }
+        protected int TileHeight { get; set; }
+        public Tiletype type;
+
+        public Tile(Texture2D texture, float X, float Y, Tiletype type):base(texture, X, Y)
+        {
+            TileHeight = 32;
+            TileWidth = 32;
+
+        }
+        /*
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+
+        }
+        */
+    }
     class World : GameComponent
     {
-        public int TileWidth { get; set; }
-        public int TileHeight { get; set; }
         public int[,] Data { get; set; }
         public Texture2D TileMap { get; set; }
         public Vector2 CameraPosition { get; set; }
+        protected List<Tile> tiles;
 
         private int viewportWidth, viewportHeight;
 
@@ -23,6 +45,46 @@ namespace Monogame_2Dplatformer
         {
             viewportWidth = Game.GraphicsDevice.Viewport.Width;
             viewportHeight = Game.GraphicsDevice.Viewport.Height;
+
+            tiles = new List<Tile>();
+
+            Data = new int[,]
+               {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,1,0,0,1,1,1,1,1,1,0,0},
+                {0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,0,0,1,0,0,1,0,0,1,1,1,0,0},
+                {0,1,0,0,1,1,1,1,1,0,1,0,1,1,1,0,0,0,1,0,0,1,0,0,1,1,1,0,0},
+                {0,1,0,0,1,0,0,0,0,0,1,0,1,1,1,0,0,1,1,0,0,1,0,0,1,1,1,0,0},
+                {0,1,0,1,1,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,1,0,0,0,1,1,0,0},
+                {0,1,0,1,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,1,1,1,0,1,0,1,1,0,0},
+                {0,1,0,0,1,0,0,1,1,1,1,0,0,1,1,1,1,1,1,0,0,0,0,1,0,1,0,0,0},
+                {0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,1,1,1,0,1,0,0,0},
+                {0,1,1,1,0,1,1,1,1,1,1,0,0,1,0,1,1,1,1,1,1,0,0,1,0,1,1,0,0},
+                {0,1,1,1,0,1,0,0,0,0,1,0,0,1,0,1,0,1,1,1,1,0,0,1,0,0,1,0,0},
+                {0,1,1,1,0,1,0,1,1,1,1,0,0,1,0,1,0,0,0,0,0,0,1,1,1,0,1,0,0},
+                {0,1,1,1,0,1,0,1,0,0,0,0,0,1,0,1,0,1,1,1,0,0,0,1,0,0,1,0,0},
+                {0,1,1,1,0,1,0,1,1,1,1,1,0,1,0,1,0,1,0,1,0,0,0,1,0,0,1,0,0},
+                {0,1,1,1,0,1,0,0,0,0,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,0,1,0,0},
+                {0,1,0,0,0,1,0,1,1,1,1,1,0,1,0,1,0,0,0,1,0,1,0,0,0,0,1,0,0},
+                {0,1,0,0,0,1,0,1,0,0,0,0,0,1,0,1,0,1,0,1,1,1,1,1,0,0,1,0,0},
+                {0,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,0,0},
+                {0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0},
+                {0,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+
+            for(int i=0; i < Data.GetLength(0); i++)
+            {
+                for(int j=0; j < Data.GetLength(1); j++)
+                {
+                    Tiletype type;
+                    if (Data[i, j] == 0)
+                        type = Tiletype.wall;
+                    else if (Data[i, j] == 1)
+                        type = Tiletype.ground;
+
+                    Tile temp = new Tile(TileMap, (float)i, (float)j, type);
+                        
+                }
+            }
 
             base.Initialize();
         }
@@ -59,6 +121,8 @@ namespace Monogame_2Dplatformer
             {
                 for (int x = startX; x < Data.GetLength(1) && x <= endX; x++)
                 {
+
+
                     position.X = (x * TileWidth - CameraPosition.X + screenCenterX);
                     position.Y = (y * TileHeight - CameraPosition.Y + screenCenterY);
 

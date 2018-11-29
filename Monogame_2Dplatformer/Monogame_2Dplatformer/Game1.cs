@@ -26,9 +26,10 @@ namespace Monogame_2Dplatformer
 
         public Game1()
         {
-            world = new World(this);
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            world = new World(this);
 
             //Fix to get rid multiple Draw() calls in a row
             //http://forums.create.msdn.com/forums/t/9934.aspx
@@ -47,32 +48,7 @@ namespace Monogame_2Dplatformer
         {
             // TODO: Add your initialization logic here
             cam = new Camera();
-            world.TileHeight = 32;
-            world.TileWidth = 32;
-            world.Data = new int[,]
-               {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                {0,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,1,0,0,1,1,1,1,1,1,0,0},
-                {0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,0,0,1,0,0,1,0,0,1,1,1,0,0},
-                {0,1,0,0,1,1,1,1,1,0,1,0,1,1,1,0,0,0,1,0,0,1,0,0,1,1,1,0,0},
-                {0,1,0,0,1,0,0,0,0,0,1,0,1,1,1,0,0,1,1,0,0,1,0,0,1,1,1,0,0},
-                {0,1,0,1,1,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,1,0,0,0,1,1,0,0},
-                {0,1,0,1,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,1,1,1,0,1,0,1,1,0,0},
-                {0,1,0,0,1,0,0,1,1,1,1,0,0,1,1,1,1,1,1,0,0,0,0,1,0,1,0,0,0},
-                {0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,1,1,1,0,1,0,0,0},
-                {0,1,1,1,0,1,1,1,1,1,1,0,0,1,0,1,1,1,1,1,1,0,0,1,0,1,1,0,0},
-                {0,1,1,1,0,1,0,0,0,0,1,0,0,1,0,1,0,1,1,1,1,0,0,1,0,0,1,0,0},
-                {0,1,1,1,0,1,0,1,1,1,1,0,0,1,0,1,0,0,0,0,0,0,1,1,1,0,1,0,0},
-                {0,1,1,1,0,1,0,1,0,0,0,0,0,1,0,1,0,1,1,1,0,0,0,1,0,0,1,0,0},
-                {0,1,1,1,0,1,0,1,1,1,1,1,0,1,0,1,0,1,0,1,0,0,0,1,0,0,1,0,0},
-                {0,1,1,1,0,1,0,0,0,0,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,0,1,0,0},
-                {0,1,0,0,0,1,0,1,1,1,1,1,0,1,0,1,0,0,0,1,0,1,0,0,0,0,1,0,0},
-                {0,1,0,0,0,1,0,1,0,0,0,0,0,1,0,1,0,1,0,1,1,1,1,1,0,0,1,0,0},
-                {0,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,0,0},
-                {0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0},
-                {0,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
-                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
-
-
+ 
 
             base.Initialize();
         }
@@ -86,13 +62,10 @@ namespace Monogame_2Dplatformer
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+                
+            // TODO: use this.Content to load your game content here
             player = new Player(Content.Load<Texture2D>("Mario"), 450, 280, 1f, 1f);
             world.TileMap = Content.Load<Texture2D>("temp");
-
-
-
-
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -122,16 +95,16 @@ namespace Monogame_2Dplatformer
                 world.CameraPosition += new Vector2(-1.0f, 0);
             if (state.IsKeyDown(Keys.Right))
                 world.CameraPosition += new Vector2(1.0f, 0);
+            /*
 
 
-
-            if (player.CollisionCheck(world.Data(0)))
-            {
-
-
-            }
+                        if (player.CollisionCheck(world.Data))
+                        {
 
 
+                        }
+
+                */
 
             // TODO: Add your update logic here
             // Positionera vår kamera till mitten av vår tile rendering
