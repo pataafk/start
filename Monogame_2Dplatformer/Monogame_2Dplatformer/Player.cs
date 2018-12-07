@@ -23,7 +23,7 @@ namespace Monogame_2Dplatformer
         public void Update(GameWindow window)
         {
             KeyboardState keyboardState = Keyboard.GetState();
-
+            /*Player kontroller*/
             if (keyboardState.IsKeyDown(Keys.Right))
                 vector.X += speed.X;
             if (keyboardState.IsKeyDown(Keys.Left))

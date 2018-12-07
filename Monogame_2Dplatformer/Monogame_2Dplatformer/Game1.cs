@@ -21,6 +21,7 @@ namespace Monogame_2Dplatformer
         World world;
         Camera cam;
         PhysicalObject collision;
+        Tile tile;
 
 
 
@@ -95,16 +96,11 @@ namespace Monogame_2Dplatformer
                 world.CameraPosition += new Vector2(-1.0f, 0);
             if (state.IsKeyDown(Keys.Right))
                 world.CameraPosition += new Vector2(1.0f, 0);
-            /*
+            
 
 
-                        if (player.CollisionCheck(world.Data))
-                        {
 
-
-                        }
-
-                */
+                
 
             // TODO: Add your update logic here
             // Positionera vår kamera till mitten av vår tile rendering
