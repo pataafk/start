@@ -18,12 +18,14 @@ namespace Monogame_2Dplatformer
         public int TileWidth { get; set; }
         public int TileHeight { get; set; }
         public Tiletype type;
+        
 
         public Tile(Texture2D texture, float X, float Y, Tiletype type):base(texture, X, Y)
         {
+
             TileHeight = 32;
             TileWidth = 32;
-
+            this.type = type;
         }
         /*
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -32,6 +34,7 @@ namespace Monogame_2Dplatformer
         }
         */
     }
+
     class World : GameComponent
     {
         public int[,] Data { get; set; }
@@ -39,7 +42,6 @@ namespace Monogame_2Dplatformer
         public Vector2 CameraPosition { get; set; }
         protected List<Tile> tiles;
         Tile tile;
-        Player player;
 
         private int viewportWidth, viewportHeight;
 
@@ -53,28 +55,7 @@ namespace Monogame_2Dplatformer
             /*map placeringan av tilesen
              */
 
-            Data = new int[,]
-               {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                {0,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,1,0,0,1,1,1,1,1,1,0,0},
-                {0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,0,0,1,0,0,1,0,0,1,1,1,0,0},
-                {0,1,0,0,1,1,1,1,1,0,1,0,1,1,1,0,0,0,1,0,0,1,0,0,1,1,1,0,0},
-                {0,1,0,0,1,0,0,0,0,0,1,0,1,1,1,0,0,1,1,0,0,1,0,0,1,1,1,0,0},
-                {0,1,0,1,1,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,1,0,0,0,1,1,0,0},
-                {0,1,0,1,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,1,1,1,0,1,0,1,1,0,0},
-                {0,1,0,0,1,0,0,1,1,1,1,0,0,1,1,1,1,1,1,0,0,0,0,1,0,1,0,0,0},
-                {0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,1,1,1,0,1,0,0,0},
-                {0,1,1,1,0,1,1,1,1,1,1,0,0,1,0,1,1,1,1,1,1,0,0,1,0,1,1,0,0},
-                {0,1,1,1,0,1,0,0,0,0,1,0,0,1,0,1,0,1,1,1,1,0,0,1,0,0,1,0,0},
-                {0,1,1,1,0,1,0,1,1,1,1,0,0,1,0,1,0,0,0,0,0,0,1,1,1,0,1,0,0},
-                {0,1,1,1,0,1,0,1,0,0,0,0,0,1,0,1,0,1,1,1,0,0,0,1,0,0,1,0,0},
-                {0,1,1,1,0,1,0,1,1,1,1,1,0,1,0,1,0,1,0,1,0,0,0,1,0,0,1,0,0},
-                {0,1,1,1,0,1,0,0,0,0,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,0,1,0,0},
-                {0,1,0,0,0,1,0,1,1,1,1,1,0,1,0,1,0,0,0,1,0,1,0,0,0,0,1,0,0},
-                {0,1,0,0,0,1,0,1,0,0,0,0,0,1,0,1,0,1,0,1,1,1,1,1,0,0,1,0,0},
-                {0,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,0,0},
-                {0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0},
-                {0,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
-                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+
 
             for(int i=0; i < Data.GetLength(0); i++)
             {
@@ -89,7 +70,7 @@ namespace Monogame_2Dplatformer
                         type = Tiletype.wall;
 
                     Tile temp = new Tile(TileMap, (float)i, (float)j, type);
-                        
+                    tiles.Add(temp);
                 }
             }
 
@@ -104,10 +85,15 @@ namespace Monogame_2Dplatformer
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            
+
+            foreach (Tile t in tiles)
+                t.Draw(spriteBatch);
+            /*
             if (Data == null || TileMap == null)
                 return;
 
+
+            
             int screenCenterX = viewportWidth / 2;
             int screenCenterY = viewportHeight / 2;
 
@@ -124,7 +110,7 @@ namespace Monogame_2Dplatformer
 
             Vector2 position = Vector2.Zero;
             int tilesPerLine = TileMap.Width / tile.TileWidth;
-
+            
             for (int y = startY; y < Data.GetLength(0) && y <= endY; y++)
             {
                 for (int x = startX; x < Data.GetLength(1) && x <= endX; x++)
@@ -142,7 +128,8 @@ namespace Monogame_2Dplatformer
                        position, tileGfx, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0f);
                 }
             }
+    */
         }
-    
+
     }
 }
