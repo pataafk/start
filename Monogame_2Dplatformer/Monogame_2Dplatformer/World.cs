@@ -23,8 +23,6 @@ namespace Monogame_2Dplatformer
         public Tile(Texture2D texture, float X, float Y, Tiletype type):base(texture, X, Y)
         {
 
-            TileHeight = 32;
-            TileWidth = 32;
             this.type = type;
         }
         /*
@@ -39,23 +37,39 @@ namespace Monogame_2Dplatformer
     {
         public int[,] Data { get; set; }
         public Texture2D TileMap { get; set; }
-        public Vector2 CameraPosition { get; set; }
+        public Vector2 Position { get; set; }
         protected List<Tile> tiles;
         Tile tile;
 
-        private int viewportWidth, viewportHeight;
-
         public override void Initialize()
         {
-            viewportWidth = Game.GraphicsDevice.Viewport.Width;
-            viewportHeight = Game.GraphicsDevice.Viewport.Height;
 
             tiles = new List<Tile>();
 
             /*map placeringan av tilesen
              */
-
-
+            Data = new int[,]
+               {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,1,0,0,1,1,1,1,1,1,0,0},
+                {0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,0,0,1,0,0,1,0,0,1,1,1,0,0},
+                {0,1,0,0,1,1,1,1,1,0,1,0,1,1,1,0,0,0,1,0,0,1,0,0,1,1,1,0,0},
+                {0,1,0,0,1,0,0,0,0,0,1,0,1,1,1,0,0,1,1,0,0,1,0,0,1,1,1,0,0},
+                {0,1,0,1,1,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,1,0,0,0,1,1,0,0},
+                {0,1,0,1,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,1,1,1,0,1,0,1,1,0,0},
+                {0,1,0,0,1,0,0,1,1,1,1,0,0,1,1,1,1,1,1,0,0,0,0,1,0,1,0,0,0},
+                {0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,1,1,1,0,1,0,0,0},
+                {0,1,1,1,0,1,1,1,1,1,1,0,0,1,0,1,1,1,1,1,1,0,0,1,0,1,1,0,0},
+                {0,1,1,1,0,1,0,0,0,0,1,0,0,1,0,1,0,1,1,1,1,0,0,1,0,0,1,0,0},
+                {0,1,1,1,0,1,0,1,1,1,1,0,0,1,0,1,0,0,0,0,0,0,1,1,1,0,1,0,0},
+                {0,1,1,1,0,1,0,1,0,0,0,0,0,1,0,1,0,1,1,1,0,0,0,1,0,0,1,0,0},
+                {0,1,1,1,0,1,0,1,1,1,1,1,0,1,0,1,0,1,0,1,0,0,0,1,0,0,1,0,0},
+                {0,1,1,1,0,1,0,0,0,0,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,0,1,0,0},
+                {0,1,0,0,0,1,0,1,1,1,1,1,0,1,0,1,0,0,0,1,0,1,0,0,0,0,1,0,0},
+                {0,1,0,0,0,1,0,1,0,0,0,0,0,1,0,1,0,1,0,1,1,1,1,1,0,0,1,0,0},
+                {0,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,0,0},
+                {0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0},
+                {0,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
 
             for(int i=0; i < Data.GetLength(0); i++)
             {
@@ -80,7 +94,7 @@ namespace Monogame_2Dplatformer
         public World(Game game) : base(game)
         {
             game.Components.Add(this);
-            CameraPosition = Vector2.Zero;
+            Position = Vector2.Zero;
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
