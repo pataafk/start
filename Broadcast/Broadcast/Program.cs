@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -12,9 +13,17 @@ namespace Broadcast
     class Program
     {
         private const int ListenPort = 11000;
+        private static Random rnd = new Random();
 
         static void Main(string[] args)
         {
+
+
+
+            //Text och bakgrund's färg vall
+            Console.ForegroundColor = GetRandomConsoleColor();
+
+
             //skapar en tråd som körs samtidigt med huvudprogrammet
             var listenThread = new Thread(Listener);
             listenThread.Start();
@@ -28,7 +37,7 @@ namespace Broadcast
             while(true)
             {
                 //Användare skriver meddelande
-                Console.Write(">");
+                Console.Write("Write>");
                 string msg = Console.ReadLine();
 
                 //skicka meddelandet
@@ -39,12 +48,24 @@ namespace Broadcast
                 Thread.Sleep(200);
             }
         }
+        private static ConsoleColor GetRandomConsoleColor()
+        {
+            var consoleColors = Enum.GetValues(typeof(ConsoleColor));
+            return (ConsoleColor)consoleColors.GetValue(rnd.Next(consoleColors.Length));    
+        }
+
+
+        public static String GetTimestamp(DateTime value)
+        {
+            return value.ToString("yyyy/MM/dd HH:mm:ss:ff  ");
+        }
 
         static void Listener()
         {
             //skapar ett object som ska lyssna efter meddelanden
             UdpClient listener = new UdpClient(ListenPort);
 
+            String timeStamp = GetTimestamp(DateTime.Now);
             try
             {
                 while (true)
@@ -55,7 +76,8 @@ namespace Broadcast
                     //lyssnar och tar emot msg
                     byte[] bytes = listener.Receive(ref groupEP);
 
-                    Console.WriteLine("Received broadcast from {0} : {1}\n", groupEP.ToString(), Encoding.UTF8.GetString(bytes, 0, bytes.Length));
+
+                    Console.WriteLine(timeStamp + "Received broadcast from {0} : {1}\n", groupEP.ToString(), Encoding.UTF8.GetString(bytes, 0, bytes.Length));
 
                 }
             }
