@@ -65,7 +65,7 @@ namespace Broadcast
             //skapar ett object som ska lyssna efter meddelanden
             UdpClient listener = new UdpClient(ListenPort);
 
-            String timeStamp = GetTimestamp(DateTime.Now);
+
             try
             {
                 while (true)
@@ -76,7 +76,7 @@ namespace Broadcast
                     //lyssnar och tar emot msg
                     byte[] bytes = listener.Receive(ref groupEP);
 
-
+                    String timeStamp = GetTimestamp(DateTime.Now);
                     Console.WriteLine(timeStamp + "Received broadcast from {0} : {1}\n", groupEP.ToString(), Encoding.UTF8.GetString(bytes, 0, bytes.Length));
 
                 }

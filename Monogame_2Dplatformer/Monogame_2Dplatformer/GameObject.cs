@@ -23,9 +23,9 @@ namespace Monogame_2Dplatformer
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            Rectangle destRect = new Rectangle(0, 0, Convert.ToInt32(texture.Width), Convert.ToInt32(texture.Height));
+            //Rectangle destRect = new Rectangle(0, 0, Convert.ToInt32(texture.Width), Convert.ToInt32(texture.Height));
             //spriteBatch.Draw(texture, vector, Color.White);
-            spriteBatch.Draw(texture, vector, destRect, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+            //spriteBatch.Draw(texture, vector, destRect, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
         }
 
         public float X { get { return vector.X; } }

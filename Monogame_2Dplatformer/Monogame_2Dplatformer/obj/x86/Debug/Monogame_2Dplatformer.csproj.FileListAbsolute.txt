@@ -27,3 +27,4 @@ C:\Users\elev\source\repos\Monogame_2Dplatformer\Monogame_2Dplatformer\bin\Windo
 C:\Users\elev\source\repos\Monogame_2Dplatformer\Monogame_2Dplatformer\bin\Windows\x86\Debug\Content\b_fotfor_barren3.xnb
 C:\Users\elev\source\repos\Monogame_2Dplatformer\Monogame_2Dplatformer\bin\Windows\x86\Debug\Content\Temp.xnb
 C:\Users\elev\source\repos\Monogame_2Dplatformer\Monogame_2Dplatformer\bin\Windows\x86\Debug\Content\Mario.xnb
+C:\Users\elev\source\repos\Monogame_2Dplatformer\Monogame_2Dplatformer\bin\Windows\x86\Debug\Content\menu.xnb

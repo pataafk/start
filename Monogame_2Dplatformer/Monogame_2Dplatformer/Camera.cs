@@ -10,6 +10,7 @@ namespace Monogame_2Dplatformer
 {
     class Camera
     {
+        /*
         public Matrix transform; // Matrix Transform
         public Vector2 pos; // Camera Position
         protected float rotation; // Camera Rotation
@@ -48,5 +49,6 @@ namespace Monogame_2Dplatformer
                 0.5f, graphicsDevice.Viewport.Height * 0.5f, 0));
             return transform;
         }
+        */
     }
 }

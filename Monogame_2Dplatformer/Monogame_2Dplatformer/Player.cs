@@ -20,7 +20,7 @@ namespace Monogame_2Dplatformer
 
         }
 
-        public void Update(GameWindow window)
+        public void Update(GameWindow window, GameTime gameTime)
         {
             KeyboardState keyboardState = Keyboard.GetState();
             /*Player kontroller*/

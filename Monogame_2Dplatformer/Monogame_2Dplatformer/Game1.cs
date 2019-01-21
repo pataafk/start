@@ -17,9 +17,7 @@ namespace Monogame_2Dplatformer
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Player player;
-        World world;
-        Camera cam;
+        TileEngine world;
 
 
 
@@ -28,7 +26,7 @@ namespace Monogame_2Dplatformer
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            world = new World(this);
+            world = new TileEngine(this);
 
             //Fix to get rid multiple Draw() calls in a row
             //http://forums.create.msdn.com/forums/t/9934.aspx
@@ -46,10 +44,9 @@ namespace Monogame_2Dplatformer
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            cam = new Camera();
 
- 
-
+            GameElements.currentState = GameElements.State.Menu;
+            GameElements.Initialize();
             base.Initialize();
         }
 
@@ -61,11 +58,11 @@ namespace Monogame_2Dplatformer
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            GameElements.LoadContent(Content, Window);
 
-                
+
             // TODO: use this.Content to load your game content here
-            player = new Player(Content.Load<Texture2D>("Mario"), 450, 280, 1f, 1f);
-            world.TileMap = Content.Load<Texture2D>("temp");
+
         }
 
         /// <summary>
@@ -87,17 +84,25 @@ namespace Monogame_2Dplatformer
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             KeyboardState state = Keyboard.GetState();
-            
-
-
-
-                
+            switch (GameElements.currentState)
+            {
+                case GameElements.State.Run:
+                    GameElements.currentState = GameElements.RunUpdate(Content, Window, gameTime);
+                    break;
+                case GameElements.State.HighScore:
+                    GameElements.currentState = GameElements.HighScoreUpdate();
+                    break;
+                case GameElements.State.Quit:
+                    this.Exit();
+                    break;
+                default:
+                    GameElements.currentState = GameElements.MenuUpdate();
+                    break;
+            }
 
             // TODO: Add your update logic here
             // Positionera vår kamera till mitten av vår tile rendering
-            cam.Pos = new Vector2(player.X , player.Y);
-
-            player.Update(Window);
+           
 
             base.Update(gameTime);
         }
@@ -111,21 +116,25 @@ namespace Monogame_2Dplatformer
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            
-
-            spriteBatch.Begin(SpriteSortMode.FrontToBack,
-            BlendState.AlphaBlend,
-            SamplerState.LinearWrap,
-            DepthStencilState.Default,
-            RasterizerState.CullNone,
-            null,
-  
-            cam.get_transformation(GraphicsDevice));
 
             //spriteBatch.Draw(mario, Vector2.Zero, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+            spriteBatch.Begin();
+            switch (GameElements.currentState)
+            {
+                case GameElements.State.Run:
+                    GameElements.RunDraw(spriteBatch, gameTime);
+                    break;
+                case GameElements.State.HighScore:
+                    GameElements.HighScoreDraw(spriteBatch);
+                    break;
+                case GameElements.State.Quit:
+                    this.Exit();
+                    break;
+                default:
+                    GameElements.MenuDraw(spriteBatch);
+                    break;
 
-            world.Draw(gameTime, spriteBatch);
-            player.Draw(spriteBatch);
+            }
             
             spriteBatch.End();
 
