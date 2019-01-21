@@ -28,7 +28,7 @@ namespace Monogame_2Dplatformer
             world = new TileEngine(this);
         }
 
-        private static void Initialize()
+        public static void Initialize()
         {
             // TODO: Add your initialization logic here
 
