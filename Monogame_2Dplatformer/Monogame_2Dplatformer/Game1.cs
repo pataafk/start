@@ -26,6 +26,8 @@ namespace Monogame_2Dplatformer
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
+            world = new TileEngine(this);
+
             //Fix to get rid multiple Draw() calls in a row
             //http://forums.create.msdn.com/forums/t/9934.aspx
             IsFixedTimeStep = false;

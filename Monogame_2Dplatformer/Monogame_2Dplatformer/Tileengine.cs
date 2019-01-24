@@ -9,13 +9,31 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Monogame_2Dplatformer
 {
-    class TileEngine : GameComponent
+    enum Tiletype
     {
+        spikes, wall, exit
+    }
+    class Tile : GameObject
+    {
+        public Tiletype type;
+
+
+        public Tile(Texture2D texture, float X, float Y, Tiletype type) : base(texture, X, Y)
+        {
+
+            this.type = type;
+        }
+
+    }
+        class TileEngine : GameComponent
+        {
         public int TileWidth { get; set; }
         public int TileHeight { get; set; }
         public int[,] Data { get; set; }
         public Texture2D TileMap { get; set; }
         public Vector2 CameraPosition { get; set; }
+        protected List<Tile> tiles;
+        Tile tile;
 
         private int viewportWidth, viewportHeight;
 
@@ -23,6 +41,52 @@ namespace Monogame_2Dplatformer
         {
             viewportWidth = Game.GraphicsDevice.Viewport.Width;
             viewportHeight = Game.GraphicsDevice.Viewport.Height;
+
+            TileHeight = 27;
+            TileWidth = 27;
+            Data = new int[,]
+                {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,1,0,0,1,1,1,1,1,1,0,0},
+                {0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,0,0,1,0,0,1,0,0,1,1,1,0,0},
+                {0,1,0,0,1,1,1,1,1,0,1,0,1,1,1,0,0,0,1,0,0,1,0,0,1,1,1,0,0},
+                {0,1,0,0,1,0,0,0,0,0,1,0,1,1,1,0,0,1,1,0,0,1,0,0,1,1,1,0,0},
+                {0,1,0,1,1,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,1,0,0,0,1,1,0,0},
+                {0,1,0,1,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,1,1,1,0,1,0,1,1,0,0},
+                {0,1,0,0,1,0,0,1,1,1,1,0,0,1,1,1,1,1,1,0,0,0,0,1,0,1,0,0,0},
+                {0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,1,1,1,0,1,0,0,0},
+                {0,1,1,1,0,1,1,1,1,1,1,0,0,1,0,1,1,1,1,1,1,0,0,1,0,1,1,0,0},
+                {0,1,1,1,0,1,0,0,0,0,1,0,0,1,0,1,0,1,1,1,1,0,0,1,0,0,1,0,0},
+                {0,1,1,1,0,1,0,1,1,1,1,0,0,1,0,1,0,0,0,0,0,0,1,1,1,0,1,0,0},
+                {0,1,1,1,0,1,0,1,0,0,0,0,0,1,0,1,0,1,1,1,0,0,0,1,0,0,1,0,0},
+                {0,1,1,1,0,1,0,1,1,1,1,1,0,1,0,1,0,1,0,1,0,0,0,1,0,0,1,0,0},
+                {0,1,1,1,0,1,0,0,0,0,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,0,1,0,0},
+                {0,1,0,0,0,1,0,1,1,1,1,1,0,1,0,1,0,0,0,1,0,1,0,0,0,0,1,0,0},
+                {0,1,0,0,0,1,0,1,0,0,0,0,0,1,0,1,0,1,0,1,1,1,1,1,0,0,1,0,0},
+                {0,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,0,0},
+                {0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0},
+                {0,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+
+
+            tiles = new List<Tile>();
+
+            for (int i = 0; i < Data.GetLength(0); i++)
+            {
+                for (int j = 0; j < Data.GetLength(1); j++)
+                {
+                    Tiletype type;
+                    if (Data[i, j] == 0)
+                        type = Tiletype.wall;
+                    else if (Data[i, j] == 1)
+                        type = Tiletype.spikes;
+                    else
+                        type = Tiletype.wall;
+
+                    Tile temp = new Tile(TileMap, (float)i, (float)j, type);
+                    tiles.Add(temp);
+                }
+            }
+
 
             base.Initialize();
         }
@@ -37,8 +101,11 @@ namespace Monogame_2Dplatformer
         {
             if (Data == null || TileMap == null)
                 return;
+            foreach (Tile t in tiles)
+                t.Draw(spriteBatch);
 
 
+            /*
 
 
             int startX = (int)((CameraPosition.X));
@@ -70,6 +137,7 @@ namespace Monogame_2Dplatformer
                        position, tileGfx, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0f);
                 }
             }
+            */
         }
 
     }

@@ -24,10 +24,14 @@ namespace Monogame_2Dplatformer
         {
             KeyboardState keyboardState = Keyboard.GetState();
             /*Player kontroller*/
-            if (keyboardState.IsKeyDown(Keys.Right))
+            if (keyboardState.IsKeyDown(Keys.D))
                 vector.X += speed.X;
-            if (keyboardState.IsKeyDown(Keys.Left))
+            if (keyboardState.IsKeyDown(Keys.A))
                 vector.X -= speed.X;
+            if (keyboardState.IsKeyDown(Keys.W))
+                vector.Y += speed.Y;
+            if (keyboardState.IsKeyDown(Keys.S))
+                vector.Y -= speed.Y;
 
 
         }
