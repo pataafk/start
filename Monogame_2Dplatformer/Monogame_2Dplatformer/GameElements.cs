@@ -74,7 +74,7 @@ namespace Monogame_2Dplatformer
         {
             player.Draw(spriteBatch);
 
-            world.draw(spriteBatch, gameTime);
+            t.draw(spriteBatch);
 
         }
 
