@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Monogame_2Dplatformer
 {
-    class GameElements
+    class GameElements : Game
     {
         static Texture2D menuSprite;
         static Vector2 menuPos;
@@ -18,14 +18,19 @@ namespace Monogame_2Dplatformer
         static TileEngine world;
         static Tile tile;
 
+
         //Olika gamestates
         public enum State { Menu, Run, HighScore, Quit };
         public static State currentState;
 
+        public void Gameelements()
+        {
+            world = new TileEngine(this);
+        }
+
         public static void Initialize()
         {
             // TODO: Add your initialization logic here
-
 
 
         }
@@ -38,7 +43,7 @@ namespace Monogame_2Dplatformer
             menuPos.Y = window.ClientBounds.Height / 2 - menuSprite.Height / 2;
             player = new Player(content.Load<Texture2D>("Mario"), 0, 0, 10f, 10f);
 
-            Texture2D temp = content.Load<Texture2D>("temp");
+            TileEngine.TileMap = content.Load<Texture2D>("temp");
 
         }
 
@@ -66,7 +71,7 @@ namespace Monogame_2Dplatformer
         {
             //Updatera spelarens position
             player.Update(window, gameTime);
-
+            world.Update(window, gameTime);
             return State.Run;
         }
 
@@ -74,7 +79,7 @@ namespace Monogame_2Dplatformer
         {
             player.Draw(spriteBatch);
 
-            t.draw(spriteBatch);
+            world.Draw(gameTime, spriteBatch);
 
         }
 

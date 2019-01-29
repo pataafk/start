@@ -26,8 +26,6 @@ namespace Monogame_2Dplatformer
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            world = new TileEngine(this);
-
             //Fix to get rid multiple Draw() calls in a row
             //http://forums.create.msdn.com/forums/t/9934.aspx
             IsFixedTimeStep = false;
@@ -47,6 +45,7 @@ namespace Monogame_2Dplatformer
 
             GameElements.currentState = GameElements.State.Menu;
             GameElements.Initialize();
+
             base.Initialize();
         }
 
@@ -59,6 +58,7 @@ namespace Monogame_2Dplatformer
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             GameElements.LoadContent(Content, Window);
+
 
 
             // TODO: use this.Content to load your game content here
