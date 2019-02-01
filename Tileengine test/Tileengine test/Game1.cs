@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Monogame_2Dplatformer
+namespace Tileengine_test
 {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
     public class Game1 : Game
     {
-
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        //public static TileEngine world;
+        TileEngine world;
+
 
 
 
         public Game1()
         {
+            world = new TileEngine(this);
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
@@ -46,6 +42,8 @@ namespace Monogame_2Dplatformer
             GameElements.currentState = GameElements.State.Menu;
             GameElements.Initialize();
 
+
+
             base.Initialize();
         }
 
@@ -57,8 +55,7 @@ namespace Monogame_2Dplatformer
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            GameElements.LoadContent(Content, Window, this);
-
+            GameElements.LoadContent(Content, Window);
 
 
             // TODO: use this.Content to load your game content here
@@ -102,7 +99,7 @@ namespace Monogame_2Dplatformer
 
             // TODO: Add your update logic here
             // Positionera vår kamera till mitten av vår tile rendering
-           
+
 
             base.Update(gameTime);
         }
@@ -135,11 +132,9 @@ namespace Monogame_2Dplatformer
                     break;
 
             }
-            
             spriteBatch.End();
 
             base.Draw(gameTime);
         }
-     
     }
 }

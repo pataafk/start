@@ -29,9 +29,9 @@ namespace Monogame_2Dplatformer
             if (keyboardState.IsKeyDown(Keys.A))
                 vector.X -= speed.X;
             if (keyboardState.IsKeyDown(Keys.W))
-                vector.Y += speed.Y;
-            if (keyboardState.IsKeyDown(Keys.S))
                 vector.Y -= speed.Y;
+            if (keyboardState.IsKeyDown(Keys.S))
+                vector.Y += speed.Y;
 
 
         }

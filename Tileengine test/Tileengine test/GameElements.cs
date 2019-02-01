@@ -8,22 +8,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Monogame_2Dplatformer
+namespace Tileengine_test
 {
     class GameElements
     {
         static Texture2D menuSprite;
         static Vector2 menuPos;
-        static Player player;
         static TileEngine world;
-        static Tile tile;
-        //static Tile tile;
 
 
         //Olika gamestates
         public enum State { Menu, Run, HighScore, Quit };
         public static State currentState;
 
+        public void Gameelements()
+        {
+            
+        }
 
         public static void Initialize()
         {
@@ -33,17 +34,14 @@ namespace Monogame_2Dplatformer
 
         }
 
-        public static void LoadContent(ContentManager content, GameWindow window, Game game)
+        public static void LoadContent(ContentManager content, GameWindow window)
         {
             // loadable content like sprite, maps and menu
             menuSprite = content.Load<Texture2D>("menu");
             menuPos.X = window.ClientBounds.Width / 2 - menuSprite.Width / 2;
             menuPos.Y = window.ClientBounds.Height / 2 - menuSprite.Height / 2;
-            player = new Player(content.Load<Texture2D>("Mario"), 50, 50, 10f, 10f);
-
-            world = new TileEngine(game);
-
             TileEngine.TileMap = content.Load<Texture2D>("temp");
+
 
         }
 
@@ -61,15 +59,15 @@ namespace Monogame_2Dplatformer
             return State.Menu;
 
         }
-         
-        public static void MenuDraw (SpriteBatch spriteBatch)
+
+        public static void MenuDraw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(menuSprite, menuPos, Color.White);
         }
+
         public static State RunUpdate(ContentManager content, GameWindow window, GameTime gameTime)
         {
             //Updatera spelarens position
-            player.Update(window, gameTime);
             world.TileHeight = 32;
             world.TileWidth = 32;
             world.Data = new int[,]
@@ -96,14 +94,9 @@ namespace Monogame_2Dplatformer
             return State.Run;
         }
 
-        public static void RunDraw (SpriteBatch spriteBatch, GameTime gameTime)
+        public static void RunDraw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            player.Draw(spriteBatch);
-
             world.Draw(spriteBatch, gameTime);
-
-            if (player.CollisionCheck(world(0)))
-
         }
 
         public static State HighScoreUpdate()
