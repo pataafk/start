@@ -70,8 +70,8 @@ namespace Monogame_2Dplatformer
         {
             //Updatera spelarens position
             player.Update(window, gameTime);
-            world.TileHeight = 32;
-            world.TileWidth = 32;
+            world.TileHeight = 42;
+            world.TileWidth = 42;
             world.Data = new int[,]
                {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                 {0,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,0},
@@ -93,17 +93,16 @@ namespace Monogame_2Dplatformer
                 {0,1,0,0,0,1,0,1,1,1,1,1,1,1,0,0,0,1,0,0,1,1,0,1,0,1,1,0},
                 {0,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,0,0,1,1,0,1,1,1,0,0},
                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+
+
             return State.Run;
         }
 
         public static void RunDraw (SpriteBatch spriteBatch, GameTime gameTime)
         {
-            player.Draw(spriteBatch);
-
+            // Gameelements Draw when starting game
             world.Draw(spriteBatch, gameTime);
-
-
-
+            player.Draw(spriteBatch);
         }
 
         public static State HighScoreUpdate()
