@@ -96,7 +96,8 @@ namespace Tileengine_test
 
         public static void RunDraw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            world.Draw(spriteBatch, gameTime);
+
+
         }
 
         public static State HighScoreUpdate()

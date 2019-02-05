@@ -102,7 +102,7 @@ namespace Monogame_2Dplatformer
 
             world.Draw(spriteBatch, gameTime);
 
-            if (player.CollisionCheck(world(0)))
+
 
         }
 

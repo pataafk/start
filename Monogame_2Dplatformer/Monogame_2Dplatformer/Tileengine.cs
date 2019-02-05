@@ -94,8 +94,6 @@ namespace Monogame_2Dplatformer
                         (index / tilesPerLine) * TileHeight, TileWidth, TileHeight);
                     spriteBatch.Draw(TileMap, position, tileGfx, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0f);
 
-                    Tile tile = new Tile(TileMap, (float)y, (float)x, type);
-                    tiles.Add(tile);
                 }
             }
 
