@@ -33,15 +33,33 @@ namespace Monogame_2Dplatformer
         public static Texture2D TileMap { get; set; }
         public Vector2 CameraPosition { get; set; }
         protected List<Tile> tiles;
-        Tile tile;
-
-
-        Player player;
         public override void Initialize()
         {
+            if (Data == null || TileMap == null)
+                return;
 
             tiles = new List<Tile>();
 
+            Vector2 position = Vector2.Zero;
+            int tilesPerLine = TileMap.Width / TileWidth;
+
+            for (int y = 0; y < Data.GetLength(0); y++)
+            {
+                for (int x = 0; x < Data.GetLength(1); x++)
+                {
+                    position.X = (x * TileWidth);
+                    position.Y = (y * TileHeight);
+
+                    Tiletype type;
+                    if (Data[y, x] == 0)
+                        type = Tiletype.wall;
+                    else if (Data[y, x] == 1)
+                        type = Tiletype.spikes;
+
+                    int index = Data[y, x];
+                    Rectangle tileGfx = new Rectangle((index % tilesPerLine) * TileWidth, (index / tilesPerLine) * TileHeight, TileWidth, TileHeight);
+                }
+            }
 
             base.Initialize();
         }
@@ -57,7 +75,7 @@ namespace Monogame_2Dplatformer
             if (Data == null || TileMap == null)
                 return;
 
-            Tiletype type;
+            tiles = new List<Tile>();
 
             Vector2 position = Vector2.Zero;
             int tilesPerLine = TileMap.Width / TileWidth;
@@ -69,24 +87,19 @@ namespace Monogame_2Dplatformer
                     position.X = (x * TileWidth);
                     position.Y = (y * TileHeight);
 
+                    Tiletype type;
                     if (Data[y, x] == 0)
                         type = Tiletype.wall;
-
-                    if (Data[y, x] == 1)
+                    else if (Data[y, x] == 1)
                         type = Tiletype.spikes;
 
-
                     int index = Data[y, x];
-                    Rectangle tileGfx = new Rectangle((index % tilesPerLine) * TileWidth,
-                        (index / tilesPerLine) * TileHeight, TileWidth, TileHeight);
+                    Rectangle tileGfx = new Rectangle((index % tilesPerLine) * TileWidth, (index / tilesPerLine) * TileHeight, TileWidth, TileHeight);
                     spriteBatch.Draw(TileMap, position, tileGfx, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0f);
-
                 }
             }
 
-
         }
-
     }
 
 
