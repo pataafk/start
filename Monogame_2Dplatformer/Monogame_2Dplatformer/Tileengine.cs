@@ -33,17 +33,33 @@ namespace Monogame_2Dplatformer
         public static Texture2D TileMap { get; set; }
         public Vector2 CameraPosition { get; set; }
         protected List<Tile> tiles;
-        Tile tile;
-        private int viewportWidth, viewportHeight;
-
         public override void Initialize()
         {
+            if (Data == null || TileMap == null)
+                return;
 
             tiles = new List<Tile>();
 
-            viewportWidth = Game.GraphicsDevice.Viewport.Width;
-            viewportHeight = Game.GraphicsDevice.Viewport.Height;
+            Vector2 position = Vector2.Zero;
+            int tilesPerLine = TileMap.Width / TileWidth;
 
+            for (int y = 0; y < Data.GetLength(0); y++)
+            {
+                for (int x = 0; x < Data.GetLength(1); x++)
+                {
+                    position.X = (x * TileWidth);
+                    position.Y = (y * TileHeight);
+
+                    Tiletype type;
+                    if (Data[y, x] == 0)
+                        type = Tiletype.wall;
+                    else if (Data[y, x] == 1)
+                        type = Tiletype.spikes;
+
+                    int index = Data[y, x];
+                    Rectangle tileGfx = new Rectangle((index % tilesPerLine) * TileWidth, (index / tilesPerLine) * TileHeight, TileWidth, TileHeight);
+                }
+            }
 
             base.Initialize();
         }
@@ -59,23 +75,14 @@ namespace Monogame_2Dplatformer
             if (Data == null || TileMap == null)
                 return;
 
-            int startX = (int)((CameraPosition.X) / TileWidth);
-            int startY = (int)((CameraPosition.Y) / TileHeight);
-
-            int endX = (int)(startX + viewportWidth / TileWidth) + 1;
-            int endY = (int)(startY + viewportHeight / TileHeight) + 1;
-
-            if (startX < 0)
-                startX = 0;
-            if (startY < 0)
-                startY = 0;
+            tiles = new List<Tile>();
 
             Vector2 position = Vector2.Zero;
             int tilesPerLine = TileMap.Width / TileWidth;
 
-            for (int y = startY; y < Data.GetLength(0) && y <= endY; y++)
+            for (int y = 0; y < Data.GetLength(0); y++)
             {
-                for (int x = startX; x < Data.GetLength(1) && x <= endX; x++)
+                for (int x = 0; x < Data.GetLength(1); x++)
                 {
                     position.X = (x * TileWidth);
                     position.Y = (y * TileHeight);
@@ -85,21 +92,14 @@ namespace Monogame_2Dplatformer
                         type = Tiletype.wall;
                     else if (Data[y, x] == 1)
                         type = Tiletype.spikes;
-                    else
-                        type = Tiletype.wall;
-
 
                     int index = Data[y, x];
-                    Rectangle tileGfx = new Rectangle((index % tilesPerLine) * TileWidth,
-                        (index / tilesPerLine) * TileHeight, TileWidth, TileHeight);
+                    Rectangle tileGfx = new Rectangle((index % tilesPerLine) * TileWidth, (index / tilesPerLine) * TileHeight, TileWidth, TileHeight);
                     spriteBatch.Draw(TileMap, position, tileGfx, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0f);
-
                 }
             }
 
-
         }
-
     }
 
 

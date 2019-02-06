@@ -93,17 +93,16 @@ namespace Monogame_2Dplatformer
                 {0,1,0,0,0,1,0,1,1,1,1,1,1,1,0,0,0,1,0,0,1,1,0,1,0,1,1,0},
                 {0,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,0,0,1,1,0,1,1,1,0,0},
                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+
+
             return State.Run;
         }
 
         public static void RunDraw (SpriteBatch spriteBatch, GameTime gameTime)
         {
-            player.Draw(spriteBatch);
-
+            // Gameelements Draw when starting game
             world.Draw(spriteBatch, gameTime);
-
-
-
+            player.Draw(spriteBatch);
         }
 
         public static State HighScoreUpdate()
