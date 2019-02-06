@@ -51,7 +51,7 @@ namespace Monogame_2Dplatformer
         public TileEngine(Game game) : base(game)
         {
             game.Components.Add(this);
-
+                
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
