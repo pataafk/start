@@ -33,16 +33,12 @@ namespace Monogame_2Dplatformer
         public static Texture2D TileMap { get; set; }
         public Vector2 CameraPosition { get; set; }
         protected List<Tile> tiles;
-        Tile tile;
-        private int viewportWidth, viewportHeight;
+
 
         public override void Initialize()
         {
 
             tiles = new List<Tile>();
-
-            viewportWidth = Game.GraphicsDevice.Viewport.Width;
-            viewportHeight = Game.GraphicsDevice.Viewport.Height;
 
 
             base.Initialize();
@@ -59,23 +55,12 @@ namespace Monogame_2Dplatformer
             if (Data == null || TileMap == null)
                 return;
 
-            int startX = (int)((CameraPosition.X) / TileWidth);
-            int startY = (int)((CameraPosition.Y) / TileHeight);
-
-            int endX = (int)(startX + viewportWidth / TileWidth) + 1;
-            int endY = (int)(startY + viewportHeight / TileHeight) + 1;
-
-            if (startX < 0)
-                startX = 0;
-            if (startY < 0)
-                startY = 0;
-
             Vector2 position = Vector2.Zero;
             int tilesPerLine = TileMap.Width / TileWidth;
 
-            for (int y = startY; y < Data.GetLength(0) && y <= endY; y++)
+            for (int y = 0; y < Data.GetLength(0); y++)
             {
-                for (int x = startX; x < Data.GetLength(1) && x <= endX; x++)
+                for (int x = 0; x < Data.GetLength(1); x++)
                 {
                     position.X = (x * TileWidth);
                     position.Y = (y * TileHeight);

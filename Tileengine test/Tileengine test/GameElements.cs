@@ -15,6 +15,7 @@ namespace Tileengine_test
         static Texture2D menuSprite;
         static Vector2 menuPos;
         static TileEngine world;
+        static GameObject mySprite;
 
 
         //Olika gamestates
@@ -43,6 +44,7 @@ namespace Tileengine_test
             TileEngine.TileMap = content.Load<Texture2D>("temp");
 
 
+            GameObject mySprite = new GameObject { Texture = content.Load("temp"), Position = new Vector2(100, 50) };
         }
 
         public static State MenuUpdate()

@@ -45,6 +45,8 @@ namespace Monogame_2Dplatformer
 
             TileEngine.TileMap = content.Load<Texture2D>("temp");
 
+
+
         }
 
         public static State MenuUpdate()
@@ -103,6 +105,7 @@ namespace Monogame_2Dplatformer
             // Gameelements Draw when starting game
             world.Draw(spriteBatch, gameTime);
             player.Draw(spriteBatch);
+
         }
 
         public static State HighScoreUpdate()
